@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block content %}
+    <div class="container">
+        <div class="py-5 text-center">
+            <h2>Update User form - {{user.first_name}} {{user.last_name}}</h2>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 order-md-1">
+                <form class="needs-validation" method="POST" action="{% url 'update_user' user.email %}" novalidate>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="id_first_name">First name</label>
+                            <input type="text" class="form-control" name="first_name" id="id_first_name" placeholder="" value="{{user.first_name}}" required>
+                            <div class="invalid-feedback">
+                                Valid first name is required.
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="id_last_name">Last name</label>
+                            <input type="text" class="form-control" name="last_name" id="id_last_name" placeholder="" value="{{user.last_name}}" required>
+                            <div class="invalid-feedback">
+                                Valid last name is required.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="id_email">Email</label>
+                            <input type="email" class="form-control" name="email" id="id_email" placeholder="you@example.com" value="{{user.email}}" required>
+                            <div class="invalid-feedback">
+                                Please enter a valid email address.
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label for="id_age">Age</label>
+                            <input type="number" class="form-control" name="age" id="id_age" placeholder="18" value="{{user.age}}" required>
+                            <div class="invalid-feedback">
+                                Please enter your age.
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 mb-3">
+                            <label for="id_sex">Sex</label>
+                            <select class="custom-select d-block w-100" name="sex" id="id_sex" required>
+                                <option value="">Choose...</option>
+                                <option {% if user.sex == '1' %}selected{% endif %} value="1">Man</option>
+                                <option {% if user.sex == '2' %}selected{% endif %} value="2">Woman</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Please select a sex.
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr class="mb-4">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Update</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/form-validation.js' %}"></script>
+{% endblock %}

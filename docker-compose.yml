@@ -1,0 +1,31 @@
+version: '3'
+
+volumes:
+  mongodb_data: {}
+
+services:
+  django: &django
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - mongodb
+    volumes:
+      - .:/code
+    ports:
+      - "9999:9999"
+    networks:
+      - playvox
+
+  mongodb:
+    image: mongo:3.4.1
+    working_dir: /opt/mongodb
+    volumes:
+      - mongodb_data:/opt/mongodb
+    command: sh -c 'mkdir -p /opt/mongodb && mongod --port 27017 --dbpath /opt/mongodb'
+    ports:
+      - "27017:27017"
+    networks:
+      - playvox
+networks:
+  playvox:
